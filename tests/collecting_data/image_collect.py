@@ -72,7 +72,7 @@ while not quit:
     # print("hello")
     while pause:
         time.sleep(.5)
-
+    if quit: break
     start_t = time.time()
     while len(data) <= 8:
         # print("llllll")
