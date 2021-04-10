@@ -25,7 +25,7 @@ def getanothermodel():
     model.add(Dense(1, activation='softmax'))
 
 
-    model.compile(loss='mean square error',
+    model.compile(loss='mse',
                   optimizer='adam',
                   metrics=['accuracy'])
     return model
