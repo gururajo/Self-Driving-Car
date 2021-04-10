@@ -28,6 +28,7 @@ def throttlethread():
     def quitfunc():
         global quit
         quit=True
+        pause=False
         root.destroy()
     root = Tk()
     root.geometry('600x200')
