@@ -26,7 +26,7 @@ def throttlethread():
         global pause
         pause=not pause
     def quitfunc():
-        global quit
+        global quit,pause
         quit=True
         pause=False
         root.destroy()
@@ -71,6 +71,7 @@ anglelist = np.zeros(52, dtype='int')
 while not quit:
     # print("hello")
     while pause:
+        print("paused")
         time.sleep(.5)
     if quit: break
     start_t = time.time()
@@ -202,5 +203,6 @@ else:
     print("saved data")
     print(anglelist)
     client_socket.close()
+client_socket.close()
 print("complted")
 # root.mainloop()

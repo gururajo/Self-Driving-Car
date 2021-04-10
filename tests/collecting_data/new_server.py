@@ -24,7 +24,7 @@ while True:
     if not res:
         print("problem reading camera")
         break
-    frame=cv2.resize(frame,(320,320))
+    frame=cv2.resize(frame,(200,66))
     pframe=pickle.dumps(frame)
     msg=struct.pack("Q",len(pframe))+pframe
     client_socket.sendall(msg)

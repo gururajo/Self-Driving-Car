@@ -58,4 +58,4 @@ def getmodel():
     return model
 
 if __name__== "__main__":
-    getmodel().save("mynew")
+    getmodel().save("model/mynew")
