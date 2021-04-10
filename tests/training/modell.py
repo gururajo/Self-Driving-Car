@@ -52,7 +52,7 @@ def getmodel():
     model.add(Dense(1))
 
 
-    model.compile(loss='mean square error',
+    model.compile(loss='mse',
                   optimizer='adam',
                   metrics=['accuracy'])
     return model
