@@ -1,0 +1,13 @@
+models/
+model/
+DownloadedModels/
+protoc-3.15.3-win64/
+__pycache__/
+.vscode/
+.ipynb_checkpoints/
+DATA/
+*.npy
+data/
+test_set/
+cat_and_dog_set/
+*.zip
