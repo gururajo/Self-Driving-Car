@@ -22,7 +22,7 @@ def getmodel():
     model.add(Dense(1))
 
 
-    model.compile(loss='categorical_crossentropy',
+    model.compile(loss='mean square error',
                   optimizer='adam',
                   metrics=['accuracy'])
     return model
