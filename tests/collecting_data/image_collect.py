@@ -172,8 +172,15 @@ while not quit:
 
         print("RAM greater than 85 saving the data")
         random.shuffle(balanced_data)
+        frames=[]
+        angles=[]
+        for [frame,angle] in balanced_data:
+            frames.append(frame)
+            angles.append(angle)
+        balanced_data=[]
+
         np.savez_compressed("DATA/data85_"+str(datacounter)+".npz",
-                np.array(balanced_data, dtype=object))
+                np.array(frames,dtype="float32"),np.array(angles,dtype="float32"))
         # datacounter += 1
         # np.save("DATA/data85_"+str(datacounter)+".npy",
         #         np.array(balanced_data[int(len(balanced_data)/2):], dtype=object))

@@ -33,11 +33,11 @@ def getanothermodel():
 def getmodel():
     model = Sequential()
 
-    model.add(Conv2D(filters=24, kernel_size=3,strides=2,input_shape=(66,200, 3), activation='relu'))
+    model.add(Conv2D(filters=24, kernel_size=5,strides=2,input_shape=(66,200, 3), activation='relu'))
     
-    model.add(Conv2D(filters=36, kernel_size=3,strides=2,activation='relu'))
+    model.add(Conv2D(filters=36, kernel_size=5,strides=2,activation='relu'))
     
-    model.add(Conv2D(filters=48, kernel_size=3,strides=2,activation='relu'))
+    model.add(Conv2D(filters=48, kernel_size=5,strides=2,activation='relu'))
     
 
     model.add(Conv2D(filters=64, kernel_size=3,strides=2,activation='relu'))#1
