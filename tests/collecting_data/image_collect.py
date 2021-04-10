@@ -28,6 +28,7 @@ def throttlethread():
     def quitfunc():
         global quit
         quit=True
+        root.destroy()
     root = Tk()
     root.geometry('600x200')
     slider1 = Scale(root, from_=1285, to=1800, length=400, resolution=1,orient=HORIZONTAL, command=assign_angle, variable=angle).pack()
@@ -58,6 +59,9 @@ balanced_data = []
 datalist = sorted(os.listdir("DATA/"))
 datacounter = len(datalist)+1
 ramthresh = 80
+countthresh=350
+maxineachclass=6
+minineachclass=2
 pause = quit = False
 # balancing stuff
 anglelist = np.zeros(52, dtype='int')
@@ -96,38 +100,47 @@ while not quit:
     print(len(training_data), len(balanced_data), angle)
     training_data.append([frame, angle])
     client_socket.sendall(pickle.dumps(angle))
-    if psutil.virtual_memory().percent > ramthresh or len(training_data)>600:
+    if psutil.virtual_memory().percent > ramthresh or len(training_data)>countthresh:
         random.shuffle(training_data)
         print(anglelist)
-        if min(anglelist) > 4:
+        if min(anglelist) > minineachclass:
             print("inside greter than")
             addedlist=[]
             anglelist = np.full(52, min(anglelist), dtype='int')
             for i in range(len(training_data)):
-                print("inside loop")
+                # print("inside loop")
                 [frame, angle]=training_data[i]
                 index = int((1800-int(angle))/10)
-                if anglelist[index]-1 >= 0:
-                    print("inside if")
+                if anglelist[index] > 0:
+                    # print("inside if")
                     frame = frame/255
                     anglei = (int(angle)-1285)/515
                     balanced_data.append([frame, anglei])
                     anglelist[index] -= 1
                 else:
-                    print("inside else")
+                    # print("inside else")
                     addedlist.append([frame,angle])
             print("outside loop")
             training_data=addedlist
             addedlist=[]
-            anglelist = np.zeros(52, dtype='int')
             print("copied")
+            anglelist = np.zeros(52, dtype='int')
+            for fna in balanced_data:
+                angle=fna[1]*515+1285
+                index = int((1800-int(angle))/10)
+                anglelist[index]+=1
+            print("balanced data anglelist",anglelist)
+
+                
+            anglelist = np.zeros(52, dtype='int')
             for fna in training_data:
                 index = int((1800-int(fna[1]))/10)
                 anglelist[index]+=1
             print("anglelist ready")
             pause=True
             time.sleep(.5)
-            if psutil.virtual_memory().percent < ramthresh and len(balanced_data)<600:
+            print(anglelist,len(training_data),sum(anglelist))
+            if psutil.virtual_memory().percent < ramthresh and len(balanced_data)<countthresh:
                 print("not enough data \n continuing")
                 continue
         else:
@@ -140,7 +153,7 @@ while not quit:
                 fna = training_data[i]
                 index = int((1800-int(fna[1]))/10)
                 # print("inside loop found index", index)
-                if anglelist[index] < 10:
+                if anglelist[index] < maxineachclass:
                     
                     # print("less than 10 so inside if")
                     temp.append(fna)
@@ -159,16 +172,17 @@ while not quit:
 
         print("RAM greater than 85 saving the data")
         random.shuffle(balanced_data)
-        np.save("DATA/data85_"+str(datacounter)+".npy",
-                np.array(balanced_data[:int(len(balanced_data)/2)], dtype=object))
-        datacounter += 1
-        np.save("DATA/data85_"+str(datacounter)+".npy",
-                np.array(balanced_data[int(len(balanced_data)/2):], dtype=object))
-        # break
+        np.savez_compressed("DATA/data85_"+str(datacounter)+".npz",
+                np.array(balanced_data, dtype=object))
+        # datacounter += 1
+        # np.save("DATA/data85_"+str(datacounter)+".npy",
+        #         np.array(balanced_data[int(len(balanced_data)/2):], dtype=object))
+        # # break
         datacounter += 1
         training_data = []
         balanced_data = []
         anglelist = np.zeros(52, dtype='int')
+        print("Done saving press resume")
 
     
     cv2.imshow("frame", frame)
