@@ -14,8 +14,6 @@ from tkinter import *
 
 # tkinter stufffffff
 angle = 1540
-
-
 def throttlethread():
     global angle
     angle = 1540
@@ -24,38 +22,22 @@ def throttlethread():
         global angle
         angle = val
         # print(val)
+    def pnrfunc():
+        global pause
+        pause=not pause
+    def quitfunc():
+        global quit
+        quit=True
     root = Tk()
     root.geometry('600x200')
-    slider1 = Scale(root, from_=1285, to=1800, length=400, resolution=1,
-                    orient=HORIZONTAL, command=assign_angle, variable=angle)
-    slider1.pack()
+    slider1 = Scale(root, from_=1285, to=1800, length=400, resolution=1,orient=HORIZONTAL, command=assign_angle, variable=angle).pack()
+    quitme=Button(root,command=quitfunc,text="QUIT",height=3,width=10).pack(side=LEFT,padx=100)
+    pauseorresume=Button(root,command=pnrfunc,text="pause/resume",height=3,width=10).pack(side=RIGHT,padx=100)
     root.mainloop()
-
 
 t1 = threading.Thread(target=throttlethread)
 t1.start()
 
-
-# exitting strategy
-pause = quit = False
-
-
-def quitfunc():
-    global quit, pause
-    while True:
-        n = input()
-        if n == 'q':
-            print('quitting')
-            quit = True
-            break
-        else:
-            pause = True
-            while(pause):
-                time.sleep(.1)
-
-
-quitthread = threading.Thread(target=quitfunc)
-quitthread.start()
 
 # socket stufffffffff
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -76,16 +58,15 @@ balanced_data = []
 datalist = sorted(os.listdir("DATA/"))
 datacounter = len(datalist)+1
 ramthresh = 80
+pause = quit = False
 # balancing stuff
 anglelist = np.zeros(52, dtype='int')
 
 
 while not quit:
     # print("hello")
-    if pause:
-        print(anglelist)
-        n = input()
-        pause = False
+    while pause:
+        time.sleep(.5)
 
     start_t = time.time()
     while len(data) <= 8:
