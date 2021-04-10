@@ -51,7 +51,7 @@ def getanothermodel():
     model.add(Dense(1, activation='softmax'))
 
 
-    model.compile(loss='categorical_crossentropy',
+    model.compile(loss='mean square error',
                   optimizer='adam',
                   metrics=['accuracy'])
     return model
