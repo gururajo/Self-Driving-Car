@@ -22,7 +22,7 @@ def getanothermodel():
     model.add(Dense(100, activation='relu'))
     model.add(Dense(50, activation='relu'))
     model.add(Dense(10, activation='relu'))
-    model.add(Dense(1, activation='softmax'))
+    model.add(Dense(1, activation='linear'))
 
 
     model.compile(loss='mse',
@@ -49,7 +49,7 @@ def getmodel():
     model.add(Dense(100, activation='relu'))
     model.add(Dense(50, activation='relu'))
     model.add(Dense(10, activation='relu'))
-    model.add(Dense(1))
+    model.add(Dense(1, activation='linear'))
 
 
     model.compile(loss='mse',
