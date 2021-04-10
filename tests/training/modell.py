@@ -40,9 +40,9 @@ def getmodel():
     model.add(Conv2D(filters=48, kernel_size=5,strides=2,activation='relu'))
     
 
-    model.add(Conv2D(filters=64, kernel_size=3,strides=2,activation='relu'))#1
+    model.add(Conv2D(filters=64, kernel_size=3,activation='relu'))#1
     
-    model.add(Conv2D(filters=64, kernel_size=3,strides=2,activation='relu'))#22
+    model.add(Conv2D(filters=64, kernel_size=3,activation='relu'))#22
     
     model.add(Flatten())
     
@@ -58,4 +58,4 @@ def getmodel():
     return model
 
 if __name__== "__main__":
-    getmodel().save("model/mynew")
+    getmodel().save("mynew")
