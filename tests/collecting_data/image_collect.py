@@ -206,10 +206,22 @@ while not quit:
         break
 
 # np.save("DATA/data85_"+str(datacounter)+".npy",np.array(training_data[:int(len(training_data)/2)],dtype=object))
-else:
-    print("saved data")
-    print(anglelist)
-    client_socket.close()
+
+print("quit")
+print(anglelist)
+if len(balanced_data)>0:
+    print("Quiting and saving")
+    random.shuffle(balanced_data)
+    frames = []
+    angles = []
+    for [frame, langle] in balanced_data:
+        frames.append(frame)
+        angles.append(langle)
+    balanced_data = []
+
+    np.savez_compressed("DATA/data_66_x_200_"+str(datacounter)+str(len(frames))+"_" +
+                        ".npz", np.array(frames, dtype="float32"), np.array(angles, dtype="float32"))
+    
 client_socket.close()
 print("complted")
 # root.mainloop()

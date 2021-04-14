@@ -6,7 +6,7 @@ import time
 from modell import getmodel
 
 cam=cv2.VideoCapture(0)
-model=tf.saved_model.load("model/mymodel")
+model=tf.keras.models.load_model("model/mymodel")
 while True:
     if not cam.isOpened():
         print("camera errror")
@@ -21,5 +21,6 @@ while True:
     # np.resize(frame,(1,66,200,3))
     frame=frame.astype("float32")
     input_tensor = np.expand_dims(frame, 0)
-    predictions = model(input_tensor)
+
+    predictions = model.predict(input_tensor)
     print(predictions)
