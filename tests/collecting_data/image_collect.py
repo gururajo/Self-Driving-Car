@@ -53,11 +53,11 @@ t1.start()
 # socket stufffffffff
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # host_ip = '169.254.250.37' # paste your server ip address here
-#host_ip = '192.168.43.34'
+host_ip = '192.168.43.34'
 # host_ip = '192.168.43.55'
-host_name = socket.gethostname()
-host_ip = socket.gethostbyname(host_name)
-port = 9999
+# host_name = socket.gethostname()
+# host_ip = socket.gethostbyname(host_name)
+port = 9998
 client_socket.connect((host_ip, port))  # a tuple
 payload_size = struct.calcsize("Q")
 print("payload Size :", payload_size)
